@@ -1,15 +1,54 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
+import { StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { useHabitStore } from '@/store/useHabitStore';
+import { usePushNotifications } from '@/hooks/usePushNotifications';
+import NotificationForm from '@/components/NotificationForm';
+import { accentColorDark, accentColorLight } from '@/constants/Colors';
 
 export default function HomeScreen() {
+  const addHabit = useHabitStore((state) => state.addHabit);
+  const { sendNotification } = usePushNotifications();
+
+  const handleSend = async ({
+    title,
+    body,
+    startDate,
+    endDate,
+    isSingleDay,
+  }: {
+    title: string;
+    body: string;
+    startDate: Date;
+    endDate?: Date;
+    isSingleDay: boolean;
+  }) => {
+    const dateInfo = isSingleDay
+      ? { date: startDate.toISOString() }
+      : {
+          start: startDate.toISOString(),
+          end: endDate?.toISOString(),
+        };
+
+    addHabit({
+      id: Date.now().toString(),
+      title,
+      body,
+      startDate,
+      endDate,
+      isSingleDay,
+    });
+
+    await sendNotification({
+      title,
+      body,
+      data: { type: 'event', ...dateInfo },
+    });
+  };
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: accentColorLight, dark: accentColorDark }}
       headerImage={
         <Image
           source={require('@/assets/images/partial-react-logo.png')}
@@ -17,45 +56,7 @@ export default function HomeScreen() {
         />
       }
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{' '}
-          to see changes. Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">
-            npm run reset-project
-          </ThemedText>{' '}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{' '}
-          directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+      <NotificationForm onSend={handleSend} />
     </ParallaxScrollView>
   );
 }

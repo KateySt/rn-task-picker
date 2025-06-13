@@ -13,6 +13,7 @@ type IconSymbolName =
   | 'chevron.right'
   | 'settings'
   | 'profile.settings'
+  | 'calendar'
   | 'profile.view';
 
 type IconMapping = Record<
@@ -35,6 +36,7 @@ const MAPPING: IconMapping = {
   settings: 'settings',
   'profile.settings': 'manage-accounts',
   'profile.view': 'person',
+  calendar: 'calendar-today',
 };
 
 /**
