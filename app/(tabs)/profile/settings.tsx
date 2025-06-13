@@ -3,8 +3,13 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import { useThemeStore } from '@/store/useThemeStore';
+import { ThemedSwitch } from '@/components/ThemedSwitch';
+import React from 'react';
 
 export default function ProfileSettings() {
+  const { theme, toggleTheme } = useThemeStore();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -18,11 +23,13 @@ export default function ProfileSettings() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">ProfileSettings</ThemedText>
+        <ThemedText type="title">Profile Settings</ThemedText>
       </ThemedView>
-      <ThemedText>
-        This app includes example code to help you get started.
-      </ThemedText>
+
+      <ThemedView style={styles.row}>
+        <ThemedText>Dark Mode</ThemedText>
+        <ThemedSwitch value={theme === 'dark'} onValueChange={toggleTheme} />
+      </ThemedView>
     </ParallaxScrollView>
   );
 }
@@ -37,5 +44,11 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     gap: 8,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
   },
 });

@@ -7,9 +7,9 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as Notifications from 'expo-notifications';
+import { useThemeStore } from '@/store/useThemeStore';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -21,7 +21,7 @@ Notifications.setNotificationHandler({
 });
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const { theme } = useThemeStore();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -33,7 +33,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={theme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />

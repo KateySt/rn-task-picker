@@ -5,14 +5,14 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useThemeStore } from '@/store/useThemeStore';
 
 export function Collapsible({
   children,
   title,
 }: PropsWithChildren & { title: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const theme = useColorScheme() ?? 'light';
+  const { theme } = useThemeStore();
 
   return (
     <ThemedView>

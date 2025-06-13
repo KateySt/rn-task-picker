@@ -1,46 +1,47 @@
-import { Link, Slot, usePathname } from 'expo-router';
-import { View } from 'react-native';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import React from 'react';
-import { ThemedView } from '@/components/ThemedView';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Colors } from '@/constants/Colors';
+import { useThemeStore } from '@/store/useThemeStore';
+import ProfileScreen from '@/app/(tabs)/profile/index';
+import ProfileSettings from '@/app/(tabs)/profile/settings';
 
-export default function ProfileLayout() {
-  const pathname = usePathname();
+const Drawer = createDrawerNavigator();
+
+export default function DrawerLayout() {
+  const theme = useThemeStore((state) => state.theme);
 
   return (
-    <SafeAreaView edges={['top', 'left', 'right']} style={{ flex: 1 }}>
-      <ThemedView style={{ flex: 1, flexDirection: 'row' }}>
-        <ThemedView
-          style={{
-            paddingHorizontal: 8,
-            paddingVertical: 8,
-            alignItems: 'center',
-            flexDirection: 'column',
-            gap: 8,
-          }}
-        >
-          <Link href="/profile">
-            <IconSymbol
-              size={28}
-              name="profile.view"
-              color={pathname === '/profile' ? 'purple' : 'black'}
-            />
-          </Link>
-
-          <Link href="/profile/settings">
-            <IconSymbol
-              size={28}
-              name="profile.settings"
-              color={pathname === '/profile/settings' ? 'purple' : 'black'}
-            />
-          </Link>
-        </ThemedView>
-
-        <View style={{ flex: 1 }}>
-          <Slot />
-        </View>
-      </ThemedView>
-    </SafeAreaView>
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: true,
+        drawerActiveTintColor: Colors[theme].tint,
+        drawerStyle: {
+          backgroundColor: Colors[theme].background,
+        },
+        drawerLabelStyle: {
+          fontSize: 16,
+        },
+      }}
+    >
+      <Drawer.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          drawerIcon: ({ color }) => (
+            <IconSymbol name="profile.view" size={24} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Profile settings"
+        component={ProfileSettings}
+        options={{
+          drawerIcon: ({ color }) => (
+            <IconSymbol name="profile.settings" size={24} color={color} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
   );
 }

@@ -21,7 +21,6 @@ export function ThemedButton({
   ...rest
 }: ThemedButtonProps) {
   const backgroundColor = useThemeColor({}, 'tint');
-  const textColor = useThemeColor({}, 'text');
 
   return (
     <TouchableOpacity
@@ -29,7 +28,7 @@ export function ThemedButton({
       activeOpacity={0.7}
       {...rest}
     >
-      <Text style={[styles.text, { color: textColor }, textStyle]}>
+      <Text style={[styles.text, { color: '#ECEDEE' }, textStyle]}>
         {title}
       </Text>
     </TouchableOpacity>

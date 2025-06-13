@@ -7,7 +7,7 @@ import { Calendar as RNCalendar } from 'react-native-calendars';
 import { useHabitStore } from '@/store/useHabitStore';
 import { accentColorDark } from '@/constants/Colors';
 
-const Calendar = () => {
+export default function Calendar() {
   const [selectedDate, setSelectedDate] = useState<string>(getTodayString());
   const [markedDates, setMarkedDates] = useState({});
   const getActiveEventsForDay = useHabitStore(
@@ -99,7 +99,7 @@ const Calendar = () => {
       </ThemedView>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   titleContainer: {
@@ -114,5 +114,3 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
 });
-
-export default Calendar;

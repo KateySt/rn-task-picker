@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { TextInput, View } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedButton } from '@/components/ThemedButton';
 import { ThemedSwitch } from '@/components/ThemedSwitch';
 import { ThemedDateTimePicker } from '@/components/ThemedDateTimePicker';
+import { ThemedView } from '@/components/ThemedView';
+import ThemedTextInput from '@/components/ThemedTextInput';
 
 type NotificationFormProps = {
   onSend: (data: {
@@ -51,30 +52,28 @@ export default function NotificationForm({ onSend }: NotificationFormProps) {
   });
 
   return (
-    <View style={{ gap: 12 }}>
+    <ThemedView style={{ gap: 12 }}>
       <ThemedText>Title</ThemedText>
-      <TextInput
+      <ThemedTextInput
         value={formik.values.title}
         onChangeText={formik.handleChange('title')}
         placeholder="Enter title"
-        style={{ borderWidth: 1, padding: 8, borderRadius: 6 }}
       />
       {formik.errors.title && (
         <ThemedText style={{ color: 'red' }}>{formik.errors.title}</ThemedText>
       )}
 
       <ThemedText>Message</ThemedText>
-      <TextInput
+      <ThemedTextInput
         value={formik.values.body}
         onChangeText={formik.handleChange('body')}
         placeholder="Enter message"
-        style={{ borderWidth: 1, padding: 8, borderRadius: 6 }}
       />
       {formik.errors.body && (
         <ThemedText style={{ color: 'red' }}>{formik.errors.body}</ThemedText>
       )}
 
-      <View
+      <ThemedView
         style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12 }}
       >
         <ThemedText>One day only:</ThemedText>
@@ -84,7 +83,7 @@ export default function NotificationForm({ onSend }: NotificationFormProps) {
             formik.setFieldValue('isSingleDay', val);
           }}
         />
-      </View>
+      </ThemedView>
 
       <ThemedButton
         title="Select start date"
@@ -132,6 +131,6 @@ export default function NotificationForm({ onSend }: NotificationFormProps) {
         title="Send notification"
         onPress={formik.handleSubmit as any}
       />
-    </View>
+    </ThemedView>
   );
 }
