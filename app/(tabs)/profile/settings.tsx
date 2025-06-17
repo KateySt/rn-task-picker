@@ -1,24 +1,28 @@
-import { StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { useThemeStore } from '@/store/useThemeStore';
 import { ThemedSwitch } from '@/components/ThemedSwitch';
 import React from 'react';
+import { useUserStore } from '@/store/useUserStore';
 
 export default function ProfileSettings() {
   const { theme, toggleTheme } = useThemeStore();
+  const { user } = useUserStore();
 
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
       headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
+        <Image
+          source={
+            user.avatarUri
+              ? { uri: user.avatarUri }
+              : require('@/assets/images/partial-react-logo.png')
+          }
           style={styles.headerImage}
+          resizeMode="cover"
         />
       }
     >
@@ -36,10 +40,13 @@ export default function ProfileSettings() {
 
 const styles = StyleSheet.create({
   headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
     position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
   },
   titleContainer: {
     flexDirection: 'row',
