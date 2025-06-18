@@ -28,36 +28,25 @@ export default function ProfileScreen() {
   });
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <Image
-          source={
-            user.avatarUri
-              ? { uri: user.avatarUri }
-              : require('@/assets/images/partial-react-logo.png')
-          }
-          style={styles.headerImage}
-          resizeMode="cover"
-        />
-      }
-    >
+    <ThemedView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Profile</ThemedText>
       </ThemedView>
-      <FlatList
-        data={contacts}
-        keyExtractor={(item) => item.id ?? Date.now().toString()}
-        renderItem={({ item }) => (
-          <ThemedView style={{ padding: 10 }}>
-            <ThemedText>{item.name}</ThemedText>
-            {item.phoneNumbers?.map((p, i) => (
-              <ThemedText key={i}>{p.number}</ThemedText>
-            ))}
-          </ThemedView>
-        )}
-      />
-    </ParallaxScrollView>
+      {contacts?.length > 0 && (
+        <FlatList
+          data={contacts}
+          keyExtractor={(item) => item.id ?? Date.now().toString()}
+          renderItem={({ item }) => (
+            <ThemedView style={{ padding: 10 }}>
+              <ThemedText>{item.name}</ThemedText>
+              {item.phoneNumbers?.map((p, i) => (
+                <ThemedText key={i}>{p.number}</ThemedText>
+              ))}
+            </ThemedView>
+          )}
+        />
+      )}
+    </ThemedView>
   );
 }
 

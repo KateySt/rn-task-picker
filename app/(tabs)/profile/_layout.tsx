@@ -6,6 +6,7 @@ import { useThemeStore } from '@/store/useThemeStore';
 import ProfileScreen from '@/app/(tabs)/profile/index';
 import ProfileSettings from '@/app/(tabs)/profile/settings';
 import CameraScreen from '@/app/(tabs)/profile/camera';
+import BackgroundTaskScreen from '@/app/(tabs)/profile/background';
 
 const Drawer = createDrawerNavigator();
 
@@ -46,6 +47,19 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="Camera"
         component={CameraScreen}
+        options={{
+          drawerIcon: ({ color }) => (
+            <IconSymbol
+              name="chevron.left.forwardslash.chevron.right"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="BGT"
+        component={BackgroundTaskScreen}
         options={{
           drawerIcon: ({ color }) => (
             <IconSymbol
