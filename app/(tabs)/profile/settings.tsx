@@ -12,6 +12,8 @@ import * as Network from 'expo-network';
 import { ThemedButton } from '@/components/ThemedButton';
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
+import MapView from 'react-native-maps';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const html = `
 <html>
@@ -81,6 +83,12 @@ export default function ProfileSettings() {
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Profile Settings</ThemedText>
+      </ThemedView>
+
+      <LanguageSwitcher />
+
+      <ThemedView style={{ height: 300 }}>
+        <MapView style={styles.map} />
       </ThemedView>
 
       <ThemedView style={styles.titleContainer}>
@@ -153,5 +161,9 @@ const styles = StyleSheet.create({
   },
   printer: {
     textAlign: 'center',
+  },
+  map: {
+    width: '100%',
+    height: '100%',
   },
 });

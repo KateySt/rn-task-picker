@@ -7,6 +7,7 @@ import { ThemedSwitch } from '@/components/ThemedSwitch';
 import { ThemedDateTimePicker } from '@/components/ThemedDateTimePicker';
 import { ThemedView } from '@/components/ThemedView';
 import ThemedTextInput from '@/components/ThemedTextInput';
+import { strings } from '@/locales/i18n';
 
 type NotificationFormProps = {
   onSend: (data: {
@@ -57,7 +58,7 @@ export default function NotificationForm({ onSend }: NotificationFormProps) {
       <ThemedTextInput
         value={formik.values.title}
         onChangeText={formik.handleChange('title')}
-        placeholder="Enter title"
+        placeholder={strings('NotificationForm.title')}
       />
       {formik.errors.title && (
         <ThemedText style={{ color: 'red' }}>{formik.errors.title}</ThemedText>

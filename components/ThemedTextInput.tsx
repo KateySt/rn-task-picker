@@ -41,6 +41,10 @@ const ThemedTextInput = ({
   return (
     <View style={[styles.wrapper, { borderColor, backgroundColor }]}>
       <TextInput
+        autoCorrect={true}
+        spellCheck={true}
+        keyboardType="default"
+        textContentType="none"
         style={[
           { color: textColor, flex: 1 },
           type === 'default' && styles.default,
