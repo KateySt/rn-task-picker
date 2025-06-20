@@ -45,6 +45,10 @@ const ThemedTextInput = ({
         spellCheck={true}
         keyboardType="default"
         textContentType="none"
+        autoComplete="off"
+        autoCapitalize="sentences"
+        importantForAutofill="yes"
+        inputMode="text"
         style={[
           { color: textColor, flex: 1 },
           type === 'default' && styles.default,
